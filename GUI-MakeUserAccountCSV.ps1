@@ -5,8 +5,8 @@ Add-Type -AssemblyName System.Windows.Forms
     $GFont                      = 'Consolas,10'
     $Xrow1                      = 20
     $Xrow2                      = 230
-    $outpath                    = '\\10.153.2.222\c$\temp'
-    $MakeAccountScriptPath      = ''
+    $outpath                    = '' #location where you intended to store the CSV Files
+    $MakeAccountScriptPath      = '' #file path to pwsh 7 script to create user accounts
 
 <#BEGIN
 Form and elements =========================================================================
@@ -271,12 +271,14 @@ Function Reset-Form {
 }
 
 Function Check-File {
-    Start-Sleep 3
+    #once csv is created it will sleep for 2 seconds and test the path of the file created and make the Labe located in same location as the button appear
+    Start-Sleep 2
     IF(test-path $outpath\$outfile) {$labFS.Visible = $true}
 }
 
 Function Make-accounts {    
-    start-process pwsh.exe -ArgumentList "-interactive -file C:\scripts\MasterUserCreatorV2.ps1" -UseNewEnvironment -wait -WindowStyle Maximized
+    #launches powershell window with your user account creation script so visual feed back can be seen.
+    start-process pwsh.exe -ArgumentList "-interactive -file $MakeAccountScriptPath" -UseNewEnvironment -wait -WindowStyle Maximized
 }
 
 #endregion Functions
